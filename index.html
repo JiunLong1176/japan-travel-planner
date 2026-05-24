@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本旅游手册 · 神奈川沖浪裏</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@400;700;900&family=Klee+One:wght@400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Ukiyo-e palette — pulled from Hokusai's Great Wave */
+    --ink: #15110a;             /* sumi ink black */
+    --paper: #ede0c2;           /* aged washi paper */
+    --paper-warm: #f5ead0;      /* lighter washi */
+    --paper-deep: #e3d3ad;      /* darker paper edge */
+    --indigo-deep: #0c2a47;     /* prussian blue, deepest wave */
+    --indigo: #143d6b;          /* main wave blue */
+    --indigo-mid: #2b6093;      /* mid wave */
+    --indigo-light: #6e9bbf;    /* foam shadow */
+    --foam: #f7f2e0;            /* wave foam, off-white */
+    --vermillion: #b8392c;      /* hanko seal red */
+    --vermillion-deep: #8c2a20; /* darker seal */
+    --gold: #b58838;            /* aged gold accent */
+    --moss: #4a5d2e;            /* subtle accent */
+    --border: #b9a781;          /* paper edge brown */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans SC', 'Noto Serif JP', sans-serif;
+    font-weight: 400;
+    line-height: 1.75;
+    /* washi paper texture via layered noise */
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(184,57,44,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(12,42,71,0.05) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 0.07 0 0 0 0 0.06 0 0 0 0 0.04 0 0 0 0.13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+
+  /* ════════════════════════════════════════
+     HERO — The Great Wave
+     ═══════════════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: #e7d6a8;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+  }
+
+  /* The Great Wave background — Hokusai (1831, public domain) */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    display: block;
+    /* push the print's tones toward the page palette */
+    filter: saturate(0.85) contrast(1.05);
+  }
+  /* gradient overlays for legibility */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(231,214,168,0.0) 0%, rgba(12,42,71,0.15) 60%, rgba(12,42,71,0.55) 100%),
+      linear-gradient(90deg, rgba(12,42,71,0.45) 0%, rgba(12,42,71,0.05) 45%, rgba(231,214,168,0.0) 80%);
+  }
+
+  /* paper-edge vignette to make it feel like a print on washi */
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 0 0 120px rgba(21,17,10,0.35);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 100px 48px 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--paper-warm);
+    margin-bottom: 28px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .hero-mark::before, .hero-mark::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--paper-warm);
+    opacity: 0.6;
+  }
+
+  .hero-title {
+    font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+    font-size: clamp(56px, 11vw, 144px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: 0.05em;
+    color: var(--paper-warm);
+    margin-bottom: 16px;
+    text-shadow: 0 4px 20px rgba(12,42,71,0.55), 0 1px 0 rgba(0,0,0,0.4);
+    max-width: 980px;
+  }
+
+  .hero-title .accent {
+    color: #f0a89c;
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 4px 20px rgba(140,42,32,0.7), 0 1px 0 rgba(0,0,0,0.4);
+  }
+
+  .hero-subtitle {
+    font-family: 'Klee One', 'Shippori Mincho', serif;
+    font-size: clamp(16px, 2vw, 21px);
+    color: var(--paper-warm);
+    letter-spacing: 0.3em;
+    margin-bottom: 40px;
+    opacity: 0.92;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 48px;
+    align-items: flex-end;
+    padding-top: 28px;
+    border-top: 1px solid rgba(247,242,224,0.3);
+    max-width: 760px;
+  }
+
+  .hero-meta-item .k {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--paper-warm);
+    opacity: 0.6;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-meta-item .v {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--paper-warm);
+  }
+
+  /* vertical Japanese text — tate-gaki accent */
+  .hero-vertical {
+    position: absolute;
+    top: 60px;
+    right: 48px;
+    z-index: 11;
+    writing-mode: vertical-rl;
+    font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+    font-size: 15px;
+    letter-spacing: 0.6em;
+    color: var(--paper-warm);
+    opacity: 0.85;
+    text-shadow: 0 1px 8px rgba(12,42,71,0.6);
+  }
+
+  /* attribution caption — print-style */
+  .hero-attrib {
+    position: absolute;
+    bottom: 24px;
+    left: 48px;
+    z-index: 11;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--paper-warm);
+    opacity: 0.45;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 720px) {
+    .hero-content { padding: 80px 24px 48px; }
+    .hero-vertical { top: 40px; right: 24px; font-size: 12px; }
+    .hero-attrib { left: 24px; bottom: 16px; }
+  }
+
+  /* red hanko seal */
+  .hanko {
+    position: absolute;
+    bottom: 64px;
+    right: 48px;
+    z-index: 11;
+    width: 78px;
+    height: 78px;
+    background: var(--vermillion);
+    color: var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.05;
+    text-align: center;
+    transform: rotate(-6deg);
+    box-shadow: 0 0 0 2px var(--vermillion), 0 4px 16px rgba(184,57,44,0.3);
+    filter: url(#hankoNoise);
+    letter-spacing: 0.05em;
+  }
+  .hanko::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1.5px solid var(--paper-warm);
+    border-radius: 2px;
+    opacity: 0.7;
+  }
+
+  /* ════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--indigo-deep);
+    border-top: 3px solid var(--vermillion);
+    border-bottom: 1px solid rgba(247,242,224,0.1);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 4px 24px rgba(12,42,71,0.2);
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-brand {
+    flex-shrink: 0;
+    padding: 14px 22px;
+    background: var(--vermillion);
+    color: var(--paper-warm);
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-brand-mark {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--paper-warm);
+    flex-shrink: 0;
+  }
+
+  .nav-links { display: flex; flex: 1; }
+
+  .nav a {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: rgba(247,242,224,0.65);
+    text-decoration: none;
+    padding: 14px 20px;
+    white-space: nowrap;
+    transition: color 0.2s, background 0.2s;
+    border-right: 1px solid rgba(247,242,224,0.06);
+    position: relative;
+  }
+  .nav a:hover {
+    color: var(--paper-warm);
+    background: rgba(247,242,224,0.05);
+  }
+  .nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--vermillion);
+    transform: translateX(-50%);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .nav a:hover::after { width: 60%; }
+
+  /* active section indicator */
+  .nav a.active {
+    color: var(--paper-warm);
+    background: rgba(184,57,44,0.12);
+  }
+  .nav a.active::after {
+    width: 100%;
+    background: var(--vermillion);
+    box-shadow: 0 0 8px rgba(184,57,44,0.5);
+  }
+  .nav a.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 6px; height: 6px;
+    background: var(--vermillion);
+    border-radius: 50%;
+    margin-top: 4px;
+  }
+
+  /* scroll-margin so anchors land below the sticky nav */
+  section[id] { scroll-margin-top: 60px; }
+
+  /* ════════════════════════════════════════
+     SECTIONS
+     ═══════════════════════════════════════ */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+  .section-block {
+    padding: 80px 0 64px;
+    position: relative;
+  }
+
+  /* alternating paper tones */
+  .section-block.tone-warm {
+    background: linear-gradient(180deg, transparent 0%, rgba(245,234,208,0.5) 30%, rgba(245,234,208,0.5) 70%, transparent 100%);
+  }
+  .section-block.tone-indigo {
+    background: var(--indigo-deep);
+    color: var(--paper-warm);
+  }
+  .section-block.tone-indigo .section-title { color: var(--paper-warm); }
+  .section-block.tone-indigo .section-jp { color: rgba(247,242,224,0.55); }
+
+  /* wave divider between sections */
+  .wave-divider {
+    width: 100%;
+    height: 36px;
+    overflow: hidden;
+    display: block;
+    color: var(--indigo);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .section-number {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--vermillion);
+    line-height: 0.8;
+    opacity: 0.85;
+    flex-shrink: 0;
+    width: 80px;
+    text-align: right;
+    font-feature-settings: "tnum";
+  }
+
+  .section-head-text { flex: 1; padding-top: 6px; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--vermillion);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--vermillion);
+  }
+
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--indigo-deep);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .section-jp {
+    font-family: 'Klee One', serif;
+    font-size: 14px;
+    color: var(--ink);
+    opacity: 0.6;
+    letter-spacing: 0.1em;
+  }
+
+  /* ════════════════════════════════════════
+     OVERVIEW TABLE
+     ═══════════════════════════════════════ */
+  .overview-table-wrap {
+    border: 1px solid var(--border);
+    background: var(--paper-warm);
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .overview-table-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1px solid var(--border);
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .overview-table { width: 100%; border-collapse: collapse; }
+  .overview-table th {
+    background: var(--indigo-deep);
+    color: var(--paper-warm);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    padding: 14px 20px;
+    text-align: left;
+    font-weight: 500;
+  }
+  .overview-table td {
+    padding: 16px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .overview-table tr:last-child td { border-bottom: none; }
+  .overview-table tr:hover td { background: rgba(184,57,44,0.04); }
+
+  .date-cell {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--vermillion);
+    white-space: nowrap;
+  }
+  .date-cell .day {
+    display: inline-block;
+    font-size: 10px;
+    background: var(--vermillion);
+    color: var(--paper-warm);
+    padding: 1px 5px;
+    margin-left: 4px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+  }
+  .hotel-cell { font-weight: 600; color: var(--indigo-deep); }
+  .hotel-cell small { font-weight: 400; color: var(--border); font-size: 12px; display: block; margin-top: 2px; }
+  .note-cell { color: var(--ink); opacity: 0.75; font-size: 13px; }
+
+  /* ════════════════════════════════════════
+     INFO CARDS (transport / payment)
+     ═══════════════════════════════════════ */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 720px) { .info-grid { grid-template-columns: 1fr; } }
+
+  .info-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    padding: 28px;
+    position: relative;
+  }
+  .info-card::after {
+    content: '';
+    position: absolute;
+    top: -1px; right: -1px;
+    width: 24px; height: 24px;
+    border-top: 2px solid var(--vermillion);
+    border-right: 2px solid var(--vermillion);
+  }
+
+  .info-card-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--indigo-deep);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .info-card-title-jp {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--vermillion);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .transport-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 13px;
+    gap: 12px;
+  }
+  .transport-row:last-child { border-bottom: none; }
+  .transport-from { flex: 1; color: var(--ink); }
+  .transport-time {
+    color: var(--indigo-mid);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .transport-cost {
+    color: var(--vermillion);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .pay-item {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 13px;
+  }
+  .pay-item:last-child { border-bottom: none; }
+  .pay-item-tag {
+    flex-shrink: 0;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    color: var(--vermillion);
+    min-width: 70px;
+    font-size: 13px;
+  }
+
+  /* ════════════════════════════════════════
+     HOTEL CARDS
+     ═══════════════════════════════════════ */
+  .hotel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 720px) { .hotel-grid { grid-template-columns: 1fr; } }
+
+  .hotel-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+  .hotel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(12,42,71,0.15);
+  }
+
+  .hotel-card-img-wrap {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: var(--indigo-deep);
+  }
+  .hotel-card-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hotel-card-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(12,42,71,0.15) 0%, transparent 30%, transparent 70%, rgba(12,42,71,0.3) 100%);
+  }
+
+  .hotel-card-body { padding: 22px; }
+  .hotel-nights {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--vermillion);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .hotel-name {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 14px;
+    line-height: 1.35;
+    color: var(--indigo-deep);
+  }
+  .hotel-meta {
+    font-size: 13px;
+    color: var(--ink);
+    opacity: 0.85;
+    line-height: 1.9;
+  }
+  .hotel-meta-row {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+  }
+  .hotel-meta-label {
+    color: var(--vermillion);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    min-width: 48px;
+    flex-shrink: 0;
+  }
+
+  .hotel-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--vermillion);
+    color: var(--paper-warm);
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 6px 12px;
+    letter-spacing: 0.1em;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(184,57,44,0.3);
+  }
+
+  /* note block */
+  .note-block {
+    background: var(--paper-warm);
+    border-left: 3px solid var(--vermillion);
+    padding: 16px 22px;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.8;
+    position: relative;
+  }
+  .note-block strong { color: var(--vermillion); font-weight: 700; }
+
+  /* ════════════════════════════════════════
+     ATTRACTION CARDS
+     ═══════════════════════════════════════ */
+  .attraction-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 720px) { .attraction-grid { grid-template-columns: 1fr; } }
+
+  .attraction-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+  .attraction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 36px rgba(12,42,71,0.16);
+  }
+
+  .attraction-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    background: var(--indigo-deep);
+  }
+  .attraction-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .attraction-card:hover .attraction-img { transform: scale(1.05); }
+
+  .attraction-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(12,42,71,0.0) 35%, rgba(12,42,71,0.85) 100%);
+  }
+
+  .attraction-img-label {
+    position: absolute;
+    bottom: 16px;
+    left: 18px;
+    right: 18px;
+    z-index: 2;
+  }
+
+  .attraction-cn {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--paper-warm);
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    letter-spacing: 0.02em;
+  }
+
+  .attraction-jp {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #e6c97a;
+    letter-spacing: 0.2em;
+    margin-top: 4px;
+  }
+
+  .attraction-number {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    z-index: 2;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: var(--paper-warm);
+    opacity: 0.75;
+    letter-spacing: 0.1em;
+    background: rgba(12,42,71,0.55);
+    padding: 3px 9px;
+    backdrop-filter: blur(4px);
+  }
+
+  .attraction-body { padding: 18px 20px 20px; }
+  .attraction-desc {
+    font-size: 13px;
+    color: var(--ink);
+    opacity: 0.85;
+    line-height: 1.75;
+    margin-bottom: 14px;
+  }
+
+  .attraction-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .attraction-tag {
+    font-size: 11px;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    color: var(--ink);
+    font-family: 'Noto Sans SC', sans-serif;
+    border-radius: 0;
+  }
+
+  .free-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    background: var(--vermillion);
+    color: var(--paper-warm);
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 4px 10px;
+    letter-spacing: 0.15em;
+    transform: rotate(4deg);
+    box-shadow: 0 2px 8px rgba(184,57,44,0.4);
+  }
+
+  /* ── MAPS LINK ───────────────────────────────── */
+  .maps-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--indigo-deep);
+    text-decoration: none;
+    border: 1px solid var(--indigo-deep);
+    padding: 5px 12px;
+    transition: background 0.2s, color 0.2s;
+    text-transform: uppercase;
+  }
+  .maps-link:hover { background: var(--indigo-deep); color: var(--paper-warm); }
+
+  /* ════════════════════════════════════════
+     WARNING BOX
+     ═══════════════════════════════════════ */
+  .warning-box {
+    background: var(--paper-warm);
+    border: 1px solid var(--vermillion);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.8;
+    position: relative;
+  }
+  .warning-box::before {
+    content: '注意';
+    position: absolute;
+    top: -1px; left: 20px;
+    background: var(--vermillion);
+    color: var(--paper-warm);
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 3px 12px;
+    letter-spacing: 0.2em;
+    transform: translateY(-50%);
+  }
+  .warning-box strong { color: var(--vermillion); font-weight: 700; }
+
+  /* ════════════════════════════════════════
+     TIPS
+     ═══════════════════════════════════════ */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  @media (max-width: 720px) { .tips-grid { grid-template-columns: 1fr; } }
+
+  .tip-block {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    padding: 28px;
+    position: relative;
+  }
+  .tip-block::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 24px; height: 24px;
+    border-top: 2px solid var(--vermillion);
+    border-left: 2px solid var(--vermillion);
+  }
+  .tip-block::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 24px; height: 24px;
+    border-bottom: 2px solid var(--vermillion);
+    border-right: 2px solid var(--vermillion);
+  }
+
+  .tip-title {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 4px;
+    color: var(--indigo-deep);
+  }
+  .tip-title-jp {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--vermillion);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tip-item {
+    font-size: 13px;
+    color: var(--ink);
+    opacity: 0.85;
+    padding: 9px 0;
+    border-bottom: 1px dotted var(--border);
+    line-height: 1.7;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .tip-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .tip-item::before {
+    content: '·';
+    color: var(--vermillion);
+    font-weight: 900;
+    font-size: 18px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  /* ════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ */
+  .footer {
+    background: var(--indigo-deep);
+    color: rgba(247,242,224,0.55);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-wave {
+    width: 100%;
+    height: 60px;
+    display: block;
+    color: var(--paper);
+  }
+
+  .footer-inner {
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .footer-jp {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--paper-warm);
+    margin-bottom: 8px;
+    letter-spacing: 0.15em;
+  }
+  .footer-jp .accent { color: var(--vermillion); }
+
+  .footer-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--vermillion);
+    margin: 20px auto 24px;
+  }
+
+  .footer-text {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  .footer-mono {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: rgba(247,242,224,0.35);
+    text-transform: uppercase;
+  }
+
+  /* shared SVG defs container */
+  .svg-defs { position: absolute; width: 0; height: 0; }
+
+  img { background: var(--indigo-light); }
+
+  /* ════════════════════════════════════════
+     MOBILE
+     ═══════════════════════════════════════ */
+  @media (max-width: 720px) {
+    .container { padding: 0 20px; }
+
+    /* Hero */
+    .hero { min-height: 88vh; }
+    .hero-content { padding: 90px 22px 100px; }
+    .hero-mark { font-size: 10px; letter-spacing: 0.25em; margin-bottom: 20px; }
+    .hero-mark::before, .hero-mark::after { width: 20px; }
+    .hero-title {
+      font-size: clamp(44px, 14vw, 80px);
+      letter-spacing: 0.03em;
+      margin-bottom: 12px;
+    }
+    .hero-subtitle {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      margin-bottom: 28px;
+    }
+    .hero-meta {
+      gap: 18px 24px;
+      padding-top: 20px;
+      max-width: 100%;
+    }
+    .hero-meta-item .k { font-size: 9px; letter-spacing: 0.18em; }
+    .hero-meta-item .v { font-size: 14px; }
+
+    .hero-vertical {
+      top: 78px; right: 16px;
+      font-size: 11px;
+      letter-spacing: 0.5em;
+    }
+    .hanko {
+      width: 56px; height: 56px;
+      font-size: 15px;
+      bottom: 24px; right: 18px;
+    }
+    .hero-attrib {
+      bottom: 8px; left: 22px;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      max-width: 60%;
+    }
+
+    /* Nav */
+    .nav-brand {
+      padding: 12px 16px;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+    }
+    .nav a {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      padding: 12px 14px;
+    }
+
+    /* Sections */
+    .section-block { padding: 56px 0 44px; }
+    .section-head {
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .section-number {
+      font-size: 48px;
+      width: 56px;
+    }
+    .section-title {
+      font-size: clamp(28px, 7vw, 38px);
+    }
+    .section-jp { font-size: 12px; }
+
+    /* Overview table → card-style stacked rows */
+    .overview-table thead { display: none; }
+    .overview-table, .overview-table tbody, .overview-table tr, .overview-table td {
+      display: block;
+      width: 100%;
+    }
+    .overview-table tr {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .overview-table tr:last-child { border-bottom: none; }
+    .overview-table td {
+      padding: 4px 0;
+      border-bottom: none;
+      font-size: 13px;
+    }
+    .overview-table td.date-cell {
+      font-size: 13px;
+      padding-bottom: 8px;
+      margin-bottom: 6px;
+      border-bottom: 1px dotted var(--border);
+    }
+    .overview-table td.hotel-cell { font-size: 14px; }
+    .overview-table tr:hover td { background: transparent; }
+    .overview-table tr:nth-child(even) { background: rgba(0,0,0,0.02); }
+
+    /* Info cards */
+    .info-card { padding: 22px 20px; }
+    .info-card-title { font-size: 15px; }
+    .transport-row { font-size: 12px; gap: 8px; }
+    .transport-time { font-size: 10px; }
+    .transport-cost { font-size: 11px; }
+    .pay-item { font-size: 12px; gap: 10px; }
+    .pay-item-tag { min-width: 58px; font-size: 12px; }
+
+    /* Hotel cards */
+    .hotel-card-img-wrap { height: 180px; }
+    .hotel-card-body { padding: 18px; }
+    .hotel-name { font-size: 16px; }
+    .hotel-meta { font-size: 12px; line-height: 1.85; }
+    .hotel-meta-label { min-width: 42px; font-size: 9px; }
+
+    /* Attraction cards */
+    .attraction-img-wrap { height: 200px; }
+    .attraction-body { padding: 16px 18px 18px; }
+    .attraction-cn { font-size: 19px; }
+    .attraction-jp { font-size: 9px; }
+    .attraction-desc { font-size: 12.5px; }
+    .attraction-tag { font-size: 10px; padding: 2px 8px; }
+    .maps-link { font-size: 10px; padding: 5px 10px; }
+
+    /* Warning box */
+    .warning-box { font-size: 13px; padding: 22px 18px 16px; }
+
+    /* Tips */
+    .tip-block { padding: 22px 20px; }
+    .tip-title { font-size: 15px; }
+    .tip-item { font-size: 12px; }
+
+    /* Footer */
+    .footer-inner { padding: 44px 24px 36px; }
+    .footer-jp { font-size: 26px; letter-spacing: 0.12em; }
+    .footer-text { font-size: 12px; }
+    .footer-mono { font-size: 9px; letter-spacing: 0.2em; }
+  }
+
+  @media (max-width: 420px) {
+    .hero-content { padding: 78px 20px 90px; }
+    .hero-title { font-size: 42px; line-height: 1; }
+    .hero-meta { gap: 14px 20px; }
+    .hero-meta-item .v { font-size: 13px; }
+    .hero-vertical { top: 68px; font-size: 10px; }
+    .hanko { width: 48px; height: 48px; font-size: 13px; bottom: 18px; right: 14px; }
+
+    .section-number { font-size: 40px; width: 44px; }
+    .section-title { font-size: 26px; }
+
+    .nav-brand { padding: 11px 14px; font-size: 12px; }
+    .nav a { padding: 11px 12px; font-size: 11px; letter-spacing: 0.1em; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Shared SVG filter for paper/seal texture -->
+<svg class="svg-defs" aria-hidden="true">
+  <defs>
+    <filter id="hankoNoise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <filter id="paperRough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="1"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     HERO — Great Wave
+     ══════════════════════════════════════════════════ -->
+<section class="hero">
+
+  <!-- Background: Hokusai, The Great Wave off Kanagawa (1831, public domain) -->
+  <div class="hero-bg">
+    <img class="hero-bg-img"
+         src="assets/great-wave.jpg"
+         alt="The Great Wave off Kanagawa by Katsushika Hokusai"
+         loading="eager">
+  </div>
+  <div class="hero-vignette"></div>
+
+  <!-- vertical Japanese accent -->
+  <div class="hero-vertical">神奈川沖浪裏</div>
+
+  <!-- hanko seal stamp -->
+  <div class="hanko">旅<br>記</div>
+
+  <!-- attribution -->
+  <div class="hero-attrib">葛飾北斎 · 富嶽三十六景 · c. 1831</div>
+
+  <!-- Hero content -->
+  <div class="hero-content">
+    <div class="hero-mark">Hokusai · Tokyo · 2025</div>
+    <h1 class="hero-title">日本<span class="accent">旅</span>手帖</h1>
+    <div class="hero-subtitle">十月東京・新宿・涩谷・浅草・河口湖</div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="k">Dates</div>
+        <div class="v">Oct 5 – 14, 2025</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="k">Duration</div>
+        <div class="v">九夜十日</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="k">Arrival</div>
+        <div class="v">羽田 HND</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="k">Style</div>
+        <div class="v">Mid-range · Group</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     NAV
+     ══════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="nav-brand-mark"></span>
+    日本
+  </div>
+  <div class="nav-links">
+    <a href="#overview">行程总览</a>
+    <a href="#hotels">住宿</a>
+    <a href="#shinjuku">新宿</a>
+    <a href="#shibuya">涩谷</a>
+    <a href="#asakusa">浅草</a>
+    <a href="#kawaguchiko">河口湖</a>
+    <a href="#tips">贴士</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════
+     OVERVIEW
+     ══════════════════════════════════════════════════ -->
+<section id="overview" class="section-block">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">壹</div>
+      <div class="section-head-text">
+        <div class="section-label">Itinerary</div>
+        <h2 class="section-title">行程总览</h2>
+        <div class="section-jp">十月の旅 — Trip Overview</div>
+      </div>
+    </div>
+
+    <div class="overview-table-wrap">
+      <table class="overview-table">
+        <thead>
+          <tr>
+            <th style="width: 22%">日期</th>
+            <th style="width: 30%">住宿</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="date-cell">Oct 5 <span class="day">日</span></td>
+            <td class="hotel-cell">Henn na Hotel<small>大鸟居站</small></td>
+            <td class="note-cell">22:30 羽田落地 · 京急线直达 ~10分 · 末班车 00:13</td>
+          </tr>
+          <tr>
+            <td class="date-cell">Oct 6 – 12</td>
+            <td class="hotel-cell">新宿酒店<small>Sotetsu Fresa Inn 推荐</small></td>
+            <td class="note-cell">7 晚主要行程 · 新宿 · 涩谷 · 浅草 · 河口湖</td>
+          </tr>
+          <tr>
+            <td class="date-cell">Oct 13 <span class="day">日</span></td>
+            <td class="hotel-cell">Henn na Hotel<small>大鸟居站</small></td>
+            <td class="note-cell">返回同一酒店 · 准备翌日离境</td>
+          </tr>
+          <tr>
+            <td class="date-cell">Oct 14 <span class="day">一</span></td>
+            <td class="hotel-cell">✈ 回 KL</td>
+            <td class="note-cell">23:30 羽田起飞 · 提前 3 小时到机场</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">关键交通</div>
+        <div class="info-card-title-jp">— Transportation</div>
+        <div class="transport-row"><span class="transport-from">羽田机场 → 大鸟居站</span><span class="transport-time">~10 min</span><span class="transport-cost">¥300</span></div>
+        <div class="transport-row"><span class="transport-from">大鸟居 → 新宿</span><span class="transport-time">~35 min</span><span class="transport-cost">¥600</span></div>
+        <div class="transport-row"><span class="transport-from">新宿 → 涩谷</span><span class="transport-time">~5 min</span><span class="transport-cost">¥160</span></div>
+        <div class="transport-row"><span class="transport-from">新宿 → 浅草</span><span class="transport-time">~40 min</span><span class="transport-cost">¥280</span></div>
+        <div class="transport-row"><span class="transport-from">新宿 → 河口湖 巴士</span><span class="transport-time">~2 hr</span><span class="transport-cost">¥2,200</span></div>
+        <div class="transport-row"><span class="transport-from">机场 → 酒店 的士备用</span><span class="transport-time">~15 min</span><span class="transport-cost">¥1.5–2k</span></div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title">支付与禁忌</div>
+        <div class="info-card-title-jp">— Payment &amp; Etiquette</div>
+        <div class="pay-item">
+          <span class="pay-item-tag">Wise</span>
+          <span>日常消费、餐厅、购物刷卡</span>
+        </div>
+        <div class="pay-item">
+          <span class="pay-item-tag">Suica</span>
+          <span>电车地铁 · iPhone 可加 Apple Wallet</span>
+        </div>
+        <div class="pay-item">
+          <span class="pay-item-tag">¥ 现金</span>
+          <span>7-Eleven ATM 提款 · 神社小店必备</span>
+        </div>
+        <div class="pay-item">
+          <span class="pay-item-tag">禁忌</span>
+          <span>街头无垃圾桶请随身携带</span>
+        </div>
+        <div class="pay-item">
+          <span class="pay-item-tag">禁忌</span>
+          <span>电车内保持安静 不打电话</span>
+        </div>
+        <div class="pay-item">
+          <span class="pay-item-tag">提示</span>
+          <span>10 月旺季 热门餐厅请提前预约</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- wave divider -->
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     HOTELS
+     ══════════════════════════════════════════════════ -->
+<section id="hotels" class="section-block tone-warm">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">貳</div>
+      <div class="section-head-text">
+        <div class="section-label">Accommodation</div>
+        <h2 class="section-title">住宿推荐</h2>
+        <div class="section-jp">宿 — Where to Stay</div>
+      </div>
+    </div>
+
+    <div class="hotel-grid">
+      <div class="hotel-card">
+        <div class="hotel-card-img-wrap">
+          <img class="hotel-card-img"
+            src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80"
+            alt="Henn na Hotel">
+        </div>
+        <div class="hotel-card-body">
+          <div class="hotel-nights">Oct 5 &amp; Oct 13 · 各 1 晚</div>
+          <div class="hotel-name">Henn na Hotel Tokyo Haneda</div>
+          <div class="hotel-meta">
+            <div class="hotel-meta-row"><span class="hotel-meta-label">¥</span><span>约 ¥8,000–12,000 / 晚</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">位置</span><span>大鸟居站步行约 3 分钟</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">交通</span><span>京急空港线直达</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">特色</span><span>机器人 check-in · 离机场极近</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card">
+        <div class="hotel-badge">推荐</div>
+        <div class="hotel-card-img-wrap">
+          <img class="hotel-card-img"
+            src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800&q=80"
+            alt="Sotetsu Fresa Inn Shinjuku">
+        </div>
+        <div class="hotel-card-body">
+          <div class="hotel-nights">Oct 6 – 12 · 7 晚</div>
+          <div class="hotel-name">Sotetsu Fresa Inn Higashi-Shinjuku</div>
+          <div class="hotel-meta">
+            <div class="hotel-meta-row"><span class="hotel-meta-label">¥</span><span>约 ¥8,000–11,000 / 晚</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">位置</span><span>东新宿站步行约 5 分钟</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">交通</span><span>至新宿中心约 10 分钟</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">特色</span><span>评分 4.1 · 有洗衣机 · 性价比高</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-block">
+      <strong>选址理由</strong> · 新宿到涩谷 5 分钟，到浅草 40 分钟，河口湖巴士直发，是全行程地理位置最均衡的住宿点。10 月旺季，建议提前在 Agoda / Booking.com 预订。
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     SHINJUKU
+     ══════════════════════════════════════════════════ -->
+<section id="shinjuku" class="section-block">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">叁</div>
+      <div class="section-head-text">
+        <div class="section-label">Shinjuku · 新宿</div>
+        <h2 class="section-title">新宿</h2>
+        <div class="section-jp">中间 7 晚的住宿基地，交通最均衡</div>
+      </div>
+    </div>
+
+    <div class="attraction-grid">
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">01</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80" alt="歌舞伎町">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">歌舞伎町</div>
+            <div class="attraction-jp">KABUKICHO</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">东京最著名夜生活区，霓虹灯密密麻麻，居酒屋、卡拉OK、游戏中心和最新 Toho Cinema 大楼。入夜后人气最旺，感受都市夜晚的最佳地点。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">夜晚必去</span>
+            <span class="attraction-tag">打卡圣地</span>
+            <span class="attraction-tag">夜生活</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Kabukicho+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">02</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&q=80" alt="黄金街">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">黄金街</div>
+            <div class="attraction-jp">GOLDEN GAI</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">超过 200 间只有数个座位的微型酒吧，挤在几条超窄小巷里，每间主题各异。是体验老东京氛围的极佳地方，文青和背包客的聚集地。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">独特体验</span>
+            <span class="attraction-tag">老东京风情</span>
+            <span class="attraction-tag">聊天</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Golden+Gai+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">03</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80" alt="新宿御苑">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">新宿御苑</div>
+            <div class="attraction-jp">SHINJUKU GYOEN</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">占地 58 公顷大型庭园，融合日式、法式、英式三种风格。10 月红叶开始转色，闹市中难得的宁静绿洲。门票 ¥500，非常值得。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">秋季红叶</span>
+            <span class="attraction-tag">散步</span>
+            <span class="attraction-tag">¥500 入场</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Shinjuku+Gyoen+National+Garden+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">04</span>
+          <div class="free-badge">FREE</div>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=800&q=80" alt="东京都厅">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">东京都厅展望台</div>
+            <div class="attraction-jp">METROPOLITAN GOVT.</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">新宿西口，45 楼免费展望台俯瞰东京全景，天气好时可远眺富士山。傍晚时分光线最美，完全免费，强烈推荐。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">完全免费</span>
+            <span class="attraction-tag">城市全景</span>
+            <span class="attraction-tag">傍晚最美</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Tokyo+Metropolitan+Government+Building+Shinjuku" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">05</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="思い出横丁">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">思い出横丁</div>
+            <div class="attraction-jp">MEMORY LANE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">新宿西口旁窄巷内密集着数十间炭烤居酒屋，保留了战后昭和年代的街头风貌。炭烟弥漫、香气扑鼻，是体验老东京下班文化最原汁原味的地方。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">炭烤居酒屋</span>
+            <span class="attraction-tag">昭和风情</span>
+            <span class="attraction-tag">下班文化</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Omoide+Yokocho+Memory+Lane+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">06</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1578469645742-46cae010e5d4?w=800&q=80" alt="花园神社">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">花园神社</div>
+            <div class="attraction-jp">HANAZONO SHRINE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">藏身新宿高楼大厦间的传统神社，已有三百余年历史。红色鸟居与周围现代都市形成强烈对比，是闹市中感受日本传统祭祀文化的宁静角落。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">传统神社</span>
+            <span class="attraction-tag">祈福参拜</span>
+            <span class="attraction-tag">都市反差</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Hanazono+Shrine+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     SHIBUYA
+     ══════════════════════════════════════════════════ -->
+<section id="shibuya" class="section-block tone-warm">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">肆</div>
+      <div class="section-head-text">
+        <div class="section-label">Shibuya · 涩谷</div>
+        <h2 class="section-title">涩谷</h2>
+        <div class="section-jp">从新宿坐山手线仅 5 分钟</div>
+      </div>
+    </div>
+
+    <div class="attraction-grid">
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">07</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=80" alt="涩谷十字路口">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">涩谷十字路口</div>
+            <div class="attraction-jp">SCRAMBLE CROSSING</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">全球最繁忙行人路口，绿灯一亮每次同时 1,000–3,000 人过马路，场面极壮观。必须亲身站在路口感受，夜晚霓虹灯配合尤为震撼。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">必打卡</span>
+            <span class="attraction-tag">夜晚更壮观</span>
+            <span class="attraction-tag">步行体验</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Shibuya+Scramble+Crossing+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">08</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&q=80" alt="涩谷Sky">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">涩谷 Sky 展望台</div>
+            <div class="attraction-jp">SHIBUYA SKY</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">Scramble Square 顶层露天展望台，高约 229 米，可俯瞰十字路口全景及东京全市。建议提前网购票（约 ¥2,000），傍晚或夜景最美。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">需预购票</span>
+            <span class="attraction-tag">全市夜景</span>
+            <span class="attraction-tag">露天展望</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Shibuya+Sky+Scramble+Square+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">09</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80" alt="忠犬八公">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">忠犬八公像</div>
+            <div class="attraction-jp">HACHIKO STATUE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">涩谷站出口的经典地标，忠犬八公的故事感动全日本。是集合朋友的著名 meeting point，也是必打卡的标志性照片点。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">经典地标</span>
+            <span class="attraction-tag">打卡</span>
+            <span class="attraction-tag">集合点</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Hachiko+Statue+Shibuya+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">10</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80" alt="猫街">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">猫街 &amp; 道玄坂</div>
+            <div class="attraction-jp">CAT STREET · DOGENZAKA</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">猫街是涩谷潮流购物街，独立设计师品牌、复古服饰和个性咖啡厅聚集。道玄坂是夜晚居酒屋集中地，热闹非凡。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">潮流购物</span>
+            <span class="attraction-tag">咖啡厅</span>
+            <span class="attraction-tag">夜晚美食</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Cat+Street+Shibuya+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">11</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1542931287-023b922fa89b?w=800&q=80" alt="竹下通り">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">原宿 · 竹下通り</div>
+            <div class="attraction-jp">HARAJUKU · TAKESHITA ST.</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">全球最著名的日本流行文化街道，300 米内密集着可丽饼、彩虹棉花糖和各种个性时装店。涩谷步行 10 分钟可达，体验日本年轻人最前卫的街头文化。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">流行文化</span>
+            <span class="attraction-tag">创意美食</span>
+            <span class="attraction-tag">街头时尚</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Takeshita+Street+Harajuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">12</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800&q=80" alt="代官山">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">代官山 T-Site</div>
+            <div class="attraction-jp">DAIKANYAMA</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">涩谷旁高档文青街区，以蔦屋书店（Tsutaya Books）为核心，汇聚精选咖啡厅、设计师小店和画廊。气氛安静优雅，感受另一种东京慢生活的好地方。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">蔦屋书店</span>
+            <span class="attraction-tag">精品咖啡</span>
+            <span class="attraction-tag">设计师街区</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Daikanyama+T-Site+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     ASAKUSA
+     ══════════════════════════════════════════════════ -->
+<section id="asakusa" class="section-block">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">伍</div>
+      <div class="section-head-text">
+        <div class="section-label">Asakusa · 浅草</div>
+        <h2 class="section-title">浅草</h2>
+        <div class="section-jp">从新宿坐地铁约 40 分钟</div>
+      </div>
+    </div>
+
+    <div class="attraction-grid">
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">13</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=800&q=80" alt="浅草寺">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">浅草寺</div>
+            <div class="attraction-jp">SENSO-JI TEMPLE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">东京最古老的寺庙（公元 628 年），雷门大红灯笼是标志景点，仲见世通り购物街全长 250 米。建议清晨 7 点前到访，人少且光线最美。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">历史文化</span>
+            <span class="attraction-tag">清晨最美</span>
+            <span class="attraction-tag">地标打卡</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Senso-ji+Temple+Asakusa+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">14</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80" alt="仲见世通">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">仲见世通り</div>
+            <div class="attraction-jp">NAKAMISE ST.</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">浅草寺前传统购物街约 89 间店铺，可买人形烧、雷神饼和各种伴手礼。价格亲民，买纪念品最佳地点，建议中午前去避开人潮。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">伴手礼</span>
+            <span class="attraction-tag">和菓子</span>
+            <span class="attraction-tag">传统工艺</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Nakamise+Shopping+Street+Asakusa+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">15</span>
+          <div class="free-badge">FREE</div>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1570521462033-3015e76e7432?w=800&q=80" alt="浅草观光中心">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">浅草文化观光中心</div>
+            <div class="attraction-jp">TOURIST INFO CENTER</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">浅草寺对面，8 楼有免费展望台，可同时拍到浅草寺全景和东京晴空塔，是浅草最佳拍照角度，完全免费。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">免费</span>
+            <span class="attraction-tag">绝佳角度</span>
+            <span class="attraction-tag">晴空塔背景</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Asakusa+Culture+Tourist+Information+Center+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">16</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800&q=80" alt="隅田川">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">隅田川 &amp; 花屋敷</div>
+            <div class="attraction-jp">SUMIDA RIVER · HANAYASHIKI</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">隅田川沿岸散步道风景优美，可搭乘水上巴士游览。花屋敷是日本现存最古老游乐园（1853年），小而精致充满复古气息。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">复古乐园</span>
+            <span class="attraction-tag">水上巴士</span>
+            <span class="attraction-tag">河边散步</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Sumida+River+Asakusa+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">17</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1549693578-d683be217e58?w=800&q=80" alt="东京晴空塔">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">东京晴空塔</div>
+            <div class="attraction-jp">TOKYO SKYTREE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">世界第二高塔（634 米），距浅草寺步行约 15 分钟。天望甲板（350m，¥2,100）可俯瞰整个关东平原，天气晴朗时可远眺富士山。塔下商场 Solamachi 购物也很方便。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">世界第二高塔</span>
+            <span class="attraction-tag">360 度全景</span>
+            <span class="attraction-tag">需购票</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Tokyo+Skytree+Asakusa" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">18</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="合羽桥">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">合羽桥道具街</div>
+            <div class="attraction-jp">KAPPABASHI KITCHEN ST.</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">日本最大厨具批发街，全长约 800 米，200 余间专门店销售厨具、餐具和食品样品模型。是买日本刀具、陶瓷碗碟和食品模型纪念品的最佳地点，价格比百货公司实惠。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">日本刀具</span>
+            <span class="attraction-tag">食品模型</span>
+            <span class="attraction-tag">厨具伴手礼</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Kappabashi+Kitchen+Street+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     KAWAGUCHIKO
+     ══════════════════════════════════════════════════ -->
+<section id="kawaguchiko" class="section-block tone-warm">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">陸</div>
+      <div class="section-head-text">
+        <div class="section-label">Kawaguchiko · 河口湖</div>
+        <h2 class="section-title">河口湖</h2>
+        <div class="section-jp">从新宿西口搭富士急高速巴士 ~ 2 小时</div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <strong>建议选择晴天出发</strong> — 富士山容易被云遮盖。早上 7–8 点从新宿西口出发（¥2,200），全天游览后傍晚返回。10 月天气晴朗，能见度高，是绝佳时机。如遇阴天可改期。
+    </div>
+
+    <div class="attraction-grid">
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">19</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1578637387939-43c525550085?w=800&q=80" alt="河口湖">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">河口湖湖畔</div>
+            <div class="attraction-jp">LAKE KAWAGUCHIKO</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">五个富士山湖中最易到达、景色最佳的一个。湖面倒映富士山是日本最具代表性的风景，早晨湖面平静时倒影最清晰，推荐骑自行车环湖约 20 公里。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">富士山倒影</span>
+            <span class="attraction-tag">环湖骑行</span>
+            <span class="attraction-tag">清晨最美</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Lake+Kawaguchiko+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">20</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800&q=80" alt="忍野八海">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">忍野八海</div>
+            <div class="attraction-jp">OSHINO HAKKAI</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">距河口湖约 15 分钟，8 个由富士山雪水形成的清澈泉水池，水质清澈见底，颜色呈独特蓝绿色，周围保留传统日本农村风貌，是网红拍照圣地。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">清澈泉水</span>
+            <span class="attraction-tag">传统村落</span>
+            <span class="attraction-tag">网红打卡</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Oshino+Hakkai+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">21</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800&q=80" alt="富士山缆车">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">富士山全景缆车</div>
+            <div class="attraction-jp">PANORAMIC ROPEWAY</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">从河口湖畔乘缆车登上天上山（1,075m），俯瞰河口湖全景与富士山，天气晴朗时视野极佳。往返约 ¥900，缆车只需 3 分钟，10 月山顶可能已有红叶。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">缆车</span>
+            <span class="attraction-tag">全景视野</span>
+            <span class="attraction-tag">10 月红叶</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Kachi+Kachi+Ropeway+Kawaguchiko+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">22</span>
+          <div class="free-badge">FREE</div>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1522383225653-ed111181a951?w=800&q=80" alt="大石公园">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">大石公园</div>
+            <div class="attraction-jp">OISHI PARK</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">河口湖北岸大型公园，是拍摄富士山的经典角度。10 月份有秋芒草（ススキ）盛开，金色草穗配上富士山背景，景色绝美，完全免费。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">秋芒草</span>
+            <span class="attraction-tag">富士山背景</span>
+            <span class="attraction-tag">免费</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Oishi+Park+Kawaguchiko+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">23</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="富士山五合目">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">富士山五合目</div>
+            <div class="attraction-jp">FUJI 5TH STATION</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">从河口湖搭富士急巴士约 50 分钟可达（¥1,500），海拔 2,305 米，是不登顶也能近距离感受富士山震撼气势的最佳位置。10 月山顶已积雪，气温较低，需备外套。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">富士山近距离</span>
+            <span class="attraction-tag">巴士可达</span>
+            <span class="attraction-tag">注意保暖</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Fuji+5th+Station+Kawaguchiko+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">24</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80" alt="西湖">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">西湖 · 蝙蝠穴</div>
+            <div class="attraction-jp">LAKE SAIKO · WIND CAVE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">河口湖隔壁较宁静的富士山湖，游客少风景佳。附近的富岳风穴（蝙蝠穴）是熔岩形成的天然洞穴，洞内常年约 3°C，曾用于储冰，是独特的地质体验。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">宁静湖景</span>
+            <span class="attraction-tag">熔岩洞穴</span>
+            <span class="attraction-tag">天然冰窖</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Lake+Saiko+Fugaku+Wind+Cave+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     TIPS
+     ══════════════════════════════════════════════════ -->
+<section id="tips" class="section-block">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">柒</div>
+      <div class="section-head-text">
+        <div class="section-label">Travel Tips</div>
+        <h2 class="section-title">旅游贴士</h2>
+        <div class="section-jp">出发前必读</div>
+      </div>
+    </div>
+
+    <div class="tips-grid">
+      <div class="tip-block">
+        <div class="tip-title">必备 App</div>
+        <div class="tip-title-jp">— Essential Apps</div>
+        <div class="tip-item"><span>Google Maps — 导航查路线，下载东京离线地图</span></div>
+        <div class="tip-item"><span>Suica / Pasmo — iPhone 加到 Apple Wallet 感应乘车</span></div>
+        <div class="tip-item"><span>Google 翻译 — 下载日语离线包，拍菜单即翻译</span></div>
+        <div class="tip-item"><span>Weather Japan — 查天气，河口湖当天必看晴雨</span></div>
+        <div class="tip-item"><span>Tabelog — 查餐厅评分，避开黑店</span></div>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-title">饮食建议</div>
+        <div class="tip-title-jp">— Food &amp; Dining</div>
+        <div class="tip-item"><span>便利店（7-Eleven、Family Mart）— 饭团热食，性价比超高</span></div>
+        <div class="tip-item"><span>拉面 — 新宿区名店众多，一碗约 ¥800–1,200</span></div>
+        <div class="tip-item"><span>居酒屋 — 下班后 6–8 点最热闹，人均约 ¥2,000–3,000</span></div>
+        <div class="tip-item"><span>回转寿司 — 涩谷、新宿均有，人均约 ¥1,500–2,000</span></div>
+        <div class="tip-item"><span>炸猪排 &amp; 天妇罗 — 10 月秋季推荐菜系</span></div>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-title">购物建议</div>
+        <div class="tip-title-jp">— Shopping</div>
+        <div class="tip-item"><span>新宿东口 — 伊势丹、丸井百货、BIC CAMERA 电器</span></div>
+        <div class="tip-item"><span>Muji 无印良品 — 新宿旗舰店，文具/家居超好买</span></div>
+        <div class="tip-item"><span>药妆 — DONKI、松本清，护肤品比国内便宜很多</span></div>
+        <div class="tip-item"><span>涩谷 SHIBUYA 109 — 潮流女装集中地</span></div>
+        <div class="tip-item"><span>浅草 — 传统工艺品、伴手礼、各种和菓子</span></div>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-title">注意事项</div>
+        <div class="tip-title-jp">— Etiquette &amp; Notes</div>
+        <div class="tip-item"><span>街头几乎没有垃圾桶，垃圾请随身携带</span></div>
+        <div class="tip-item"><span>电车车厢内保持安静，不要大声说话打电话</span></div>
+        <div class="tip-item"><span>大部分小店和神社只收现金，请随时备有日元</span></div>
+        <div class="tip-item"><span>打的不需要小费，直接按计价器付款即可</span></div>
+        <div class="tip-item"><span>10 月旺季，热门景点和餐厅建议提前预约</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════ -->
+<footer class="footer">
+  <svg class="footer-wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M 0,30 Q 75,5 150,30 T 300,30 T 450,30 T 600,30 T 750,30 T 900,30 T 1050,30 T 1200,30 L 1200,0 L 0,0 Z" fill="currentColor"/>
+  </svg>
+  <div class="footer-inner">
+    <div class="footer-jp">良 <span class="accent">い</span> 旅 を</div>
+    <div class="footer-divider"></div>
+    <div class="footer-text">此手册由 Claude AI 根据行程讨论整理生成<br>愿这趟旅程如富士山下的湖面，平静而美丽</div>
+    <div class="footer-mono">Oct 2025 · Tokyo · Kanagawa Wave Edition</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-spy: highlight the nav item whose section is in view
+  (function() {
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+    const sections = navLinks
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    if (!sections.length) return;
+
+    function setActive(id) {
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+
+    // IntersectionObserver fires when sections cross a band near the top of the viewport.
+    // Pick the topmost intersecting section as active.
+    const visible = new Set();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) visible.add(e.target.id);
+        else visible.delete(e.target.id);
+      });
+      if (visible.size > 0) {
+        // pick topmost by document order
+        const topId = sections
+          .map(s => s.id)
+          .find(id => visible.has(id));
+        if (topId) setActive(topId);
+      }
+    }, {
+      // Trigger when a section crosses the band just under the nav.
+      // Top offset is nav height (~60px); bottom keeps band ~30% of viewport.
+      rootMargin: '-65px 0px -65% 0px',
+      threshold: 0
+    });
+
+    sections.forEach(s => io.observe(s));
+
+    // Initial state on load
+    setActive(sections[0].id);
+  })();
+</script>
+
+</body>
+</html>
