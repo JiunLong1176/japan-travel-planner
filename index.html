@@ -527,6 +527,139 @@
     text-transform: uppercase;
   }
 
+  /* ════════════════════════════════════════
+     CURRENCY CONVERTER
+     ═══════════════════════════════════════ */
+  .fx-field {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .fx-input-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--foam);
+    border: 1px solid var(--border);
+    padding: 0 14px;
+  }
+  .fx-cur {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--vermillion);
+    font-weight: 700;
+    padding-right: 12px;
+    border-right: 1px solid var(--border);
+  }
+  .fx-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--indigo-deep);
+    padding: 12px;
+    width: 100%;
+    -moz-appearance: textfield;
+  }
+  .fx-input::-webkit-outer-spin-button,
+  .fx-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .fx-swap {
+    flex: 0 0 auto;
+    width: 46px;
+    border: 1px solid var(--indigo-deep);
+    background: var(--paper-warm);
+    color: var(--indigo-deep);
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .fx-swap:hover { background: var(--indigo-deep); color: var(--paper-warm); }
+  .fx-result {
+    font-family: 'Shippori Mincho', serif;
+    color: var(--indigo-deep);
+    line-height: 1.3;
+  }
+  .fx-result-num {
+    font-size: 34px;
+    font-weight: 800;
+  }
+  .fx-result-cur {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    color: var(--vermillion);
+    margin-left: 6px;
+  }
+  .fx-rate-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--indigo-mid);
+    margin-top: 14px;
+    line-height: 1.9;
+  }
+  .fx-rate-note .stale { color: var(--vermillion); }
+
+  .fx-chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .fx-chart-current {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--indigo-deep);
+  }
+  .fx-chart-current small {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--indigo-mid);
+    margin-left: 6px;
+  }
+  .fx-delta {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border: 1px solid currentColor;
+  }
+  .fx-delta.up { color: var(--moss); }
+  .fx-delta.down { color: var(--vermillion); }
+  .fx-delta.flat { color: var(--indigo-mid); }
+  .fx-chart-wrap { width: 100%; }
+  .fx-chart-wrap svg { width: 100%; height: auto; display: block; }
+  .fx-chart-msg {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--vermillion);
+    padding: 24px 0;
+    text-align: center;
+  }
+  .fx-axis-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    fill: var(--indigo-mid);
+  }
+  .fx-point-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    fill: var(--indigo-deep);
+    font-weight: 700;
+  }
+
   .transport-row {
     display: flex;
     justify-content: space-between;
@@ -1213,15 +1346,72 @@
     日本
   </div>
   <div class="nav-links">
+    <a href="#currency">汇率</a>
     <a href="#overview">行程总览</a>
     <a href="#hotels">住宿</a>
     <a href="#shinjuku">新宿</a>
     <a href="#shibuya">涩谷</a>
     <a href="#asakusa">浅草</a>
+    <a href="#akihabara">秋叶原</a>
+    <a href="#dushin">都心</a>
     <a href="#kawaguchiko">河口湖</a>
     <a href="#tips">贴士</a>
   </div>
 </nav>
+
+<!-- ══════════════════════════════════════════════════
+     CURRENCY
+     ══════════════════════════════════════════════════ -->
+<section id="currency" class="section-block tone-warm">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">円</div>
+      <div class="section-head-text">
+        <div class="section-label">Currency</div>
+        <h2 class="section-title">实时汇率</h2>
+        <div class="section-jp">為替レート — JPY ⇄ MYR</div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <!-- Converter -->
+      <div class="info-card">
+        <div class="info-card-title">货币换算</div>
+        <div class="info-card-title-jp">— Converter</div>
+        <div class="fx-field">
+          <div class="fx-input-wrap">
+            <span class="fx-cur" id="fx-from-cur">JPY</span>
+            <input class="fx-input" id="fx-amount" type="number" inputmode="decimal" min="0" value="1000" aria-label="金额">
+          </div>
+          <button class="fx-swap" id="fx-swap" type="button" title="切换方向" aria-label="切换换算方向">⇄</button>
+        </div>
+        <div class="fx-result">
+          <span class="fx-result-num" id="fx-result">—</span>
+          <span class="fx-result-cur" id="fx-to-cur">MYR</span>
+        </div>
+        <div class="fx-rate-note" id="fx-rate-note">正在加载实时汇率…</div>
+      </div>
+
+      <!-- Trend chart -->
+      <div class="info-card">
+        <div class="info-card-title">近 30 天走势</div>
+        <div class="info-card-title-jp">— 1,000 JPY → MYR · 30D</div>
+        <div class="fx-chart-head">
+          <span class="fx-chart-current" id="fx-chart-current">—</span>
+          <span class="fx-delta flat" id="fx-delta">—</span>
+        </div>
+        <div class="fx-chart-wrap" id="fx-chart-wrap">
+          <div class="fx-chart-msg">正在加载走势…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
 
 <!-- ══════════════════════════════════════════════════
      OVERVIEW
@@ -1542,6 +1732,132 @@
         </div>
       </div>
 
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">07</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80" alt="哥斯拉头像">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">哥斯拉头像</div>
+            <div class="attraction-jp">GODZILLA HEAD</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">歌舞伎町 Toho 大楼顶层探出的巨型哥斯拉头，是新宿最具辨识度的地标之一。每天定点会有喷烟与吼叫表演，夜晚灯光下更有气势，免费在地面即可仰望打卡。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">打卡地标</span>
+            <span class="attraction-tag">免费</span>
+            <span class="attraction-tag">夜景</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Godzilla+Head+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">08</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=80" alt="LUMINE EST">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">LUMINE EST 新宿</div>
+            <div class="attraction-jp">LUMINE EST</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">紧邻新宿站东口的时尚百货，主打年轻女性品牌、美妆与杂货，地下美食街聚集人气餐厅。逛街与用餐一站搞定，是雨天或候车时打发时间的好去处。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">购物</span>
+            <span class="attraction-tag">时尚百货</span>
+            <span class="attraction-tag">美食街</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Lumine+EST+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">09</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=800&q=80" alt="BicCamera 新宿东口店">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">BicCamera 新宿东口店</div>
+            <div class="attraction-jp">BICCAMERA</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">大型综合电器连锁店，相机、家电、美妆、药品、手办应有尽有。持护照满额可享免税，还常有折扣与积分回馈，是采购电子产品与手信的热门据点。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">电器</span>
+            <span class="attraction-tag">免税购物</span>
+            <span class="attraction-tag">手信</span>
+          </div>
+          <a href="https://www.google.com/maps/search/BicCamera+Shinjuku+East+Store+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">10</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1542931287-023b922fa89b?w=800&q=80" alt="BEAMS JAPAN">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">BEAMS JAPAN</div>
+            <div class="attraction-jp">BEAMS JAPAN</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">日本知名选物店 BEAMS 的旗舰概念店，整栋楼层从服饰、生活杂货到日本工艺与文创限定商品一应俱全。是寻找有设计感手信与日系穿搭的好地方。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">日系选物</span>
+            <span class="attraction-tag">服饰</span>
+            <span class="attraction-tag">文创手信</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Beams+Japan+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">11</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&q=80" alt="Pop Life Department M's">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">Pop Life Department M's</div>
+            <div class="attraction-jp">POP LIFE M'S</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">歌舞伎町附近的多层成人用品百货，限 18 岁以上进入。以品类齐全、明码标价著称，环境明亮整洁，是这一带颇具话题性的成人主题商店。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">成人限定</span>
+            <span class="attraction-tag">18+</span>
+            <span class="attraction-tag">话题商店</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Pop+Life+Department+Ms+Shinjuku+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">12</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1570521462033-3015e76e7432?w=800&q=80" alt="新宿高速巴士总站">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">新宿高速巴士总站</div>
+            <div class="attraction-jp">BUSTA SHINJUKU</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">位于新宿站南口 JR 大楼上方的大型高速巴士总站，也是前往河口湖高速巴士的发车点。班次班位清晰、可网上预订对号座，出发河口湖当天在此集合最方便。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">交通枢纽</span>
+            <span class="attraction-tag">河口湖巴士</span>
+            <span class="attraction-tag">建议预约</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Busta+Shinjuku+Bus+Terminal+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1569,7 +1885,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">07</span>
+          <span class="attraction-number">13</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=80" alt="涩谷十字路口">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1590,7 +1906,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">08</span>
+          <span class="attraction-number">14</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&q=80" alt="涩谷Sky">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1611,7 +1927,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">09</span>
+          <span class="attraction-number">15</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80" alt="忠犬八公">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1632,7 +1948,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">10</span>
+          <span class="attraction-number">16</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80" alt="猫街">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1653,7 +1969,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">11</span>
+          <span class="attraction-number">17</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1542931287-023b922fa89b?w=800&q=80" alt="竹下通り">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1674,7 +1990,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">12</span>
+          <span class="attraction-number">18</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800&q=80" alt="代官山">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1720,7 +2036,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">13</span>
+          <span class="attraction-number">19</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=800&q=80" alt="浅草寺">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1741,7 +2057,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">14</span>
+          <span class="attraction-number">20</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80" alt="仲见世通">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1762,7 +2078,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">15</span>
+          <span class="attraction-number">21</span>
           <div class="free-badge">FREE</div>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1570521462033-3015e76e7432?w=800&q=80" alt="浅草观光中心">
           <div class="attraction-img-overlay"></div>
@@ -1784,7 +2100,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">16</span>
+          <span class="attraction-number">22</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=800&q=80" alt="隅田川">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1805,7 +2121,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">17</span>
+          <span class="attraction-number">23</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1549693578-d683be217e58?w=800&q=80" alt="东京晴空塔">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1826,7 +2142,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">18</span>
+          <span class="attraction-number">24</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="合羽桥">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1855,12 +2171,188 @@
 </svg>
 
 <!-- ══════════════════════════════════════════════════
+     AKIHABARA
+     ══════════════════════════════════════════════════ -->
+<section id="akihabara" class="section-block tone-warm">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">陸</div>
+      <div class="section-head-text">
+        <div class="section-label">Akihabara · 秋叶原</div>
+        <h2 class="section-title">秋叶原</h2>
+        <div class="section-jp">动漫、手办与电器的圣地</div>
+      </div>
+    </div>
+
+    <div class="attraction-grid">
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">25</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&q=80" alt="高达模型店">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">高达 &amp; 敢达模型店</div>
+            <div class="attraction-jp">GUNDAM &amp; GUNPLA</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">秋叶原专营高达模型（Gunpla）的模型店，从入门 HG 到高阶 PG 一应俱全，还有限定与绝版套件。是高达迷淘宝与补货的必访据点，店内陈列本身就值得一逛。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">高达模型</span>
+            <span class="attraction-tag">限定套件</span>
+            <span class="attraction-tag">模型迷必去</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Gundam+Gunpla+Store+Otachu+Akihabara+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">26</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800&q=80" alt="Animate 秋叶原">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">Animate 秋叶原</div>
+            <div class="attraction-jp">ANIMATE AKIHABARA</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">日本最大动漫连锁 Animate 的秋叶原分店，整栋楼层贩售漫画、周边、痛包与角色商品，常有热门作品的限定贩售与展示。是二次元爱好者补货、搜集谷子的天堂。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">动漫周边</span>
+            <span class="attraction-tag">谷子</span>
+            <span class="attraction-tag">限定商品</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Animate+Akihabara+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     CENTRAL TOKYO
+     ══════════════════════════════════════════════════ -->
+<section id="dushin" class="section-block">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-number">柒</div>
+      <div class="section-head-text">
+        <div class="section-label">Central Tokyo · 都心·其他</div>
+        <h2 class="section-title">都心 · 其他</h2>
+        <div class="section-jp">皇居、银座与顺路景点</div>
+      </div>
+    </div>
+
+    <div class="attraction-grid">
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">27</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80" alt="皇居">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">皇居</div>
+            <div class="attraction-jp">IMPERIAL PALACE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">日本天皇居所，由江户城旧址改建，护城河、石墙与松林环绕。外苑与东御苑可免费参观，二重桥是经典拍照点，适合散步与感受都心中的历史与宁静。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">历史地标</span>
+            <span class="attraction-tag">免费参观</span>
+            <span class="attraction-tag">散步拍照</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Imperial+Palace+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">28</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=800&q=80" alt="银座">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">银座</div>
+            <div class="attraction-jp">GINZA</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">东京最高档的购物区，云集百货、名牌旗舰店与老字号，也有 Uniqlo、GU 大型旗舰。周末中央大道有步行者天国，夜晚霓虹与建筑设计极具都会气息。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">高档购物</span>
+            <span class="attraction-tag">名牌旗舰</span>
+            <span class="attraction-tag">步行者天国</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Ginza+Chuo+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">29</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="上野·阿美横丁">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">上野 · 阿美横丁</div>
+            <div class="attraction-jp">AMEYOKO MARKET</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">上野站旁热闹的露天市场街，海鲜、干货、零食、药妆与平价服饰应有尽有，充满昭和市井气息。边走边吃串烧与海鲜，还能砍价淘便宜手信，越晚越有活力。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">市井美食</span>
+            <span class="attraction-tag">平价淘货</span>
+            <span class="attraction-tag">边走边吃</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Ameyoko+Market+Ueno+Tokyo" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">30</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1570521462033-3015e76e7432?w=800&q=80" alt="藤子·F·不二雄博物馆">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">藤子·F·不二雄博物馆</div>
+            <div class="attraction-jp">FUJIKO F FUJIO MUSEUM</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">位于川崎的哆啦A梦主题博物馆，展出原稿、场景与限定商品，户外有经典角色雕像与主题咖啡厅。<strong>需提前在 Lawson 预约指定日期与时段门票</strong>，是漫画迷的朝圣地。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">哆啦A梦</span>
+            <span class="attraction-tag">需预约门票</span>
+            <span class="attraction-tag">主题咖啡</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Fujiko+F+Fujio+Museum+Kawasaki" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M 0,18 Q 60,2 120,18 T 240,18 T 360,18 T 480,18 T 600,18 T 720,18 T 840,18 T 960,18 T 1080,18 T 1200,18 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.15"/>
+  <path d="M 0,24 Q 60,12 120,24 T 240,24 T 360,24 T 480,24 T 600,24 T 720,24 T 840,24 T 960,24 T 1080,24 T 1200,24 L 1200,36 L 0,36 Z" fill="currentColor" opacity="0.25"/>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
      KAWAGUCHIKO
      ══════════════════════════════════════════════════ -->
 <section id="kawaguchiko" class="section-block tone-warm">
   <div class="container">
     <div class="section-head">
-      <div class="section-number">陸</div>
+      <div class="section-number">捌</div>
       <div class="section-head-text">
         <div class="section-label">Kawaguchiko · 河口湖</div>
         <h2 class="section-title">河口湖</h2>
@@ -1876,7 +2368,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">19</span>
+          <span class="attraction-number">31</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1578637387939-43c525550085?w=800&q=80" alt="河口湖">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1897,7 +2389,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">20</span>
+          <span class="attraction-number">32</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1570459027562-4a916cc6113f?w=800&q=80" alt="忍野八海">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1918,7 +2410,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">21</span>
+          <span class="attraction-number">33</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800&q=80" alt="富士山缆车">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1939,7 +2431,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">22</span>
+          <span class="attraction-number">34</span>
           <div class="free-badge">FREE</div>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1522383225653-ed111181a951?w=800&q=80" alt="大石公园">
           <div class="attraction-img-overlay"></div>
@@ -1961,7 +2453,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">23</span>
+          <span class="attraction-number">35</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="富士山五合目">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -1982,7 +2474,7 @@
 
       <div class="attraction-card">
         <div class="attraction-img-wrap">
-          <span class="attraction-number">24</span>
+          <span class="attraction-number">36</span>
           <img class="attraction-img" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80" alt="西湖">
           <div class="attraction-img-overlay"></div>
           <div class="attraction-img-label">
@@ -2001,6 +2493,69 @@
         </div>
       </div>
 
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">37</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1578469645742-46cae010e5d4?w=800&q=80" alt="北口本宫富士浅间神社">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">北口本宫富士浅间神社</div>
+            <div class="attraction-jp">FUJI SENGEN SHRINE</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">吉田口登山道的起点，是富士山信仰的重要神社。参道两旁千年杉木参天，巨大的红色鸟居与苔藓石灯笼营造出庄严神秘的氛围，是拍照与静心参拜的绝佳地点。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">富士信仰</span>
+            <span class="attraction-tag">千年杉林</span>
+            <span class="attraction-tag">庄严参道</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Kitaguchi+Hongu+Fuji+Sengen+Shrine+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">38</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800&q=80" alt="富士山温泉">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">富士山温泉</div>
+            <div class="attraction-jp">FUJIYAMA ONSEN</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">富士急乐园旁的大型天然温泉设施，木造建筑气派、泡汤时可眺望富士山。<strong>注意：目前暂停营业</strong>，前往前请先确认最新营业状态，以免扑空。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">温泉泡汤</span>
+            <span class="attraction-tag">富士景观</span>
+            <span class="attraction-tag">暂停营业</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Fujiyama+Onsen+Fujiyoshida+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
+      <div class="attraction-card">
+        <div class="attraction-img-wrap">
+          <span class="attraction-number">39</span>
+          <img class="attraction-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="富士山站">
+          <div class="attraction-img-overlay"></div>
+          <div class="attraction-img-label">
+            <div class="attraction-cn">富士山站</div>
+            <div class="attraction-jp">MT. FUJI STATION</div>
+          </div>
+        </div>
+        <div class="attraction-body">
+          <div class="attraction-desc">富士急行线的核心车站，是前往富士山吉田口、富士急乐园与浅间神社的门户。站内有观景台与商店，也是搭乘往返新宿高速巴士的主要停靠点之一。</div>
+          <div class="attraction-tags">
+            <span class="attraction-tag">交通门户</span>
+            <span class="attraction-tag">观景台</span>
+            <span class="attraction-tag">巴士停靠</span>
+          </div>
+          <a href="https://www.google.com/maps/search/Mt+Fuji+Station+Fujiyoshida+Japan" target="_blank" class="maps-link">Google Maps →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2016,7 +2571,7 @@
 <section id="tips" class="section-block">
   <div class="container">
     <div class="section-head">
-      <div class="section-number">柒</div>
+      <div class="section-number">玖</div>
       <div class="section-head-text">
         <div class="section-label">Travel Tips</div>
         <h2 class="section-title">旅游贴士</h2>
@@ -2125,6 +2680,167 @@
 
     // Initial state on load
     setActive(sections[0].id);
+  })();
+</script>
+
+<script>
+  // Live JPY ⇄ MYR converter + 30-day trend chart.
+  // Data: fawazahmed0 currency-api (free, no key). jsDelivr primary, pages.dev fallback.
+  (function() {
+    const amountEl  = document.getElementById('fx-amount');
+    const resultEl  = document.getElementById('fx-result');
+    const fromCurEl = document.getElementById('fx-from-cur');
+    const toCurEl   = document.getElementById('fx-to-cur');
+    const swapEl    = document.getElementById('fx-swap');
+    const noteEl    = document.getElementById('fx-rate-note');
+    const currentEl = document.getElementById('fx-chart-current');
+    const deltaEl   = document.getElementById('fx-delta');
+    const wrapEl    = document.getElementById('fx-chart-wrap');
+    if (!amountEl) return;
+
+    const FALLBACK = 0.0298;      // 1 JPY ≈ 0.0298 MYR — reference only
+    let jpyToMyr = FALLBACK;
+    let stale = true;
+    let rateDate = '';
+    let dir = 'JPY2MYR';
+
+    const fmtMYR = n => new Intl.NumberFormat('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+    const fmtJPY = n => new Intl.NumberFormat('ja-JP', { maximumFractionDigits: 0 }).format(n);
+
+    async function fetchJson(urls) {
+      for (const u of urls) {
+        try {
+          const r = await fetch(u, { cache: 'no-store' });
+          if (r.ok) return await r.json();
+        } catch (e) { /* try next */ }
+      }
+      throw new Error('all sources failed');
+    }
+    const latestUrls = () => [
+      'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/jpy.json',
+      'https://latest.currency-api.pages.dev/v1/currencies/jpy.json'
+    ];
+    const dateUrls = d => [
+      'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@' + d + '/v1/currencies/jpy.json',
+      'https://' + d + '.currency-api.pages.dev/v1/currencies/jpy.json'
+    ];
+
+    function recompute() {
+      const amt = parseFloat(amountEl.value) || 0;
+      if (dir === 'JPY2MYR') {
+        fromCurEl.textContent = 'JPY'; toCurEl.textContent = 'MYR';
+        resultEl.textContent = fmtMYR(amt * jpyToMyr);
+      } else {
+        fromCurEl.textContent = 'MYR'; toCurEl.textContent = 'JPY';
+        resultEl.textContent = fmtJPY(amt / jpyToMyr);
+      }
+    }
+    function renderNote() {
+      const line = '1,000 JPY = ' + fmtMYR(1000 * jpyToMyr) + ' MYR&nbsp;·&nbsp;1 MYR = ' + fmtJPY(1 / jpyToMyr) + ' JPY';
+      noteEl.innerHTML = line + (stale
+        ? '<br><span class="stale">⚠ 参考汇率 · 非实时（无法连接汇率服务）</span>'
+        : '<br>更新 ' + rateDate + ' · 数据 currency-api');
+    }
+
+    amountEl.addEventListener('input', recompute);
+    swapEl.addEventListener('click', function () {
+      dir = (dir === 'JPY2MYR') ? 'MYR2JPY' : 'JPY2MYR';
+      recompute();
+    });
+
+    function drawChart(series) {
+      if (!series || series.length < 2) {
+        wrapEl.innerHTML = '<div class="fx-chart-msg">走势数据暂不可用</div>';
+        return;
+      }
+      const W = 600, H = 220, padL = 14, padR = 62, padT = 18, padB = 26;
+      const vals = series.map(p => p.v * 1000);
+      const n = vals.length;
+      let min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+      let range = max - min; if (range === 0) range = Math.max(max * 0.01, 0.01);
+      const pad = range * 0.22, lo = min - pad, hi = max + pad;
+      const X = i => padL + (i / (n - 1)) * (W - padL - padR);
+      const Y = v => padT + (1 - (v - lo) / (hi - lo)) * (H - padT - padB);
+      const pts = vals.map((v, i) => [X(i), Y(v)]);
+      const line = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+      const area = line + ' L ' + X(n - 1).toFixed(1) + ' ' + (H - padB) + ' L ' + padL + ' ' + (H - padB) + ' Z';
+      const up = vals[n - 1] >= vals[0];
+      const stroke = up ? 'var(--moss)' : 'var(--vermillion)';
+      const iMax = vals.indexOf(max), iMin = vals.indexOf(min);
+      const mmdd = s => s.slice(5).replace('-', '/');
+
+      let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet" role="img" aria-label="JPY MYR 30 天走势">';
+      svg += '<defs><linearGradient id="fxfill" x1="0" y1="0" x2="0" y2="1">'
+           + '<stop offset="0%" stop-color="' + stroke + '" stop-opacity="0.18"/>'
+           + '<stop offset="100%" stop-color="' + stroke + '" stop-opacity="0"/></linearGradient></defs>';
+      svg += '<path d="' + area + '" fill="url(#fxfill)"/>';
+      svg += '<path d="' + line + '" fill="none" stroke="' + stroke + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+      pts.forEach((p, i) => {
+        const last = i === n - 1;
+        svg += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (last ? 3.6 : 2.2) + '" fill="' + (last ? 'var(--vermillion)' : stroke) + '"/>';
+      });
+      // max / min value labels
+      svg += '<text class="fx-point-label" x="' + X(iMax).toFixed(1) + '" y="' + (Y(max) - 6).toFixed(1) + '" text-anchor="middle">' + fmtMYR(max) + '</text>';
+      svg += '<text class="fx-point-label" x="' + X(iMin).toFixed(1) + '" y="' + (Y(min) + 13).toFixed(1) + '" text-anchor="middle">' + fmtMYR(min) + '</text>';
+      // current value at right of last point
+      svg += '<text class="fx-point-label" x="' + (X(n - 1) + 7).toFixed(1) + '" y="' + (Y(vals[n - 1]) + 3).toFixed(1) + '" text-anchor="start">' + fmtMYR(vals[n - 1]) + '</text>';
+      // x-axis end dates
+      svg += '<text class="fx-axis-label" x="' + padL + '" y="' + (H - 8) + '" text-anchor="start">' + mmdd(series[0].date) + '</text>';
+      svg += '<text class="fx-axis-label" x="' + X(n - 1).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle">' + mmdd(series[n - 1].date) + '</text>';
+      svg += '</svg>';
+      wrapEl.innerHTML = svg;
+
+      // chart header: current + 30d delta
+      currentEl.innerHTML = fmtMYR(vals[n - 1]) + ' MYR<small>/ 1,000 JPY</small>';
+      const pct = ((vals[n - 1] - vals[0]) / vals[0]) * 100;
+      deltaEl.classList.remove('up', 'down', 'flat');
+      if (pct > 0.05) { deltaEl.classList.add('up'); deltaEl.textContent = '▲ ' + pct.toFixed(2) + '% · 30D'; }
+      else if (pct < -0.05) { deltaEl.classList.add('down'); deltaEl.textContent = '▼ ' + Math.abs(pct).toFixed(2) + '% · 30D'; }
+      else { deltaEl.classList.add('flat'); deltaEl.textContent = '≈ 0.00% · 30D'; }
+    }
+
+    async function init() {
+      // 1) latest rate → converter
+      try {
+        const d = await fetchJson(latestUrls());
+        if (d && d.jpy && typeof d.jpy.myr === 'number') {
+          jpyToMyr = d.jpy.myr; stale = false; rateDate = d.date || '';
+        }
+      } catch (e) { /* keep fallback */ }
+      recompute();
+      renderNote();
+
+      // 2) history (sampled) → chart
+      const today = new Date();
+      const ymd = dt => dt.toISOString().slice(0, 10);
+      const offsets = [28, 24, 20, 16, 12, 8, 4];
+      const dates = offsets.map(o => { const dt = new Date(today); dt.setUTCDate(dt.getUTCDate() - o); return ymd(dt); });
+
+      const hist = await Promise.all(dates.map(async d => {
+        try {
+          const j = await fetchJson(dateUrls(d));
+          if (j && j.jpy && typeof j.jpy.myr === 'number') return { date: j.date || d, v: j.jpy.myr };
+        } catch (e) {}
+        return null;
+      }));
+
+      const series = hist.filter(Boolean);
+      if (!stale) series.push({ date: rateDate || ymd(today), v: jpyToMyr });
+      // dedupe by date, keep order, sort ascending
+      const seen = new Set();
+      const clean = series.filter(p => (seen.has(p.date) ? false : seen.add(p.date)))
+                          .sort((a, b) => a.date < b.date ? -1 : 1);
+
+      if (clean.length >= 2) {
+        drawChart(clean);
+      } else {
+        wrapEl.innerHTML = '<div class="fx-chart-msg">无法加载实时走势数据</div>';
+        currentEl.textContent = stale ? '参考汇率' : (fmtMYR(1000 * jpyToMyr) + ' MYR');
+        deltaEl.textContent = 'N/A';
+      }
+    }
+
+    init();
   })();
 </script>
 
