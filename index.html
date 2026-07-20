@@ -605,14 +605,15 @@
   }
   .fx-rate-note .stale { color: var(--vermillion); }
 
-  /* inline "≈ RM" next to a JPY price */
-  .jpy-approx {
+  /* inline currency equivalents next to a price */
+  .jpy-approx, .myr-approx {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.03em;
-    color: var(--vermillion);
     white-space: nowrap;
   }
+  .jpy-approx { color: var(--vermillion); }  /* ≈ RM next to a ¥ price */
+  .myr-approx { color: var(--indigo-mid); }  /* ≈ ¥ next to a RM price */
 
   .fx-chart-head {
     display: flex;
@@ -2806,6 +2807,51 @@
       });
     }
 
+    // Reverse direction: turn a matched RM string into an "≈ ¥ …" label.
+    function approxFromRmStr(s) {
+      const parts = s.replace(/RM|\s/g, '').split(/[–—-]/);
+      const toJpy = x => fmtJPY(parseFloat(x.replace(/,/g, '')) / jpyToMyr);
+      const label = (parts.length === 2 && parts[1] !== '')
+        ? '≈ ¥' + toJpy(parts[0]) + '–' + toJpy(parts[1])
+        : '≈ ¥' + toJpy(parts[0]);
+      return label + (stale ? '*' : '');
+    }
+    const RM_RE = /RM\s?\d[\d,]*(?:\.\d+)?(?:\s?[–—-]\s?\d[\d,]*(?:\.\d+)?)?/g;
+    function convertRmAmounts(root) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!node.nodeValue || node.nodeValue.indexOf('RM') < 0) return NodeFilter.FILTER_REJECT;
+          const p = node.parentNode;
+          if (!p) return NodeFilter.FILTER_REJECT;
+          if (p.nodeName === 'SCRIPT' || p.nodeName === 'STYLE') return NodeFilter.FILTER_REJECT;
+          if (p.closest && p.closest('.jpy-approx, .myr-approx, #currency')) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      const nodes = [];
+      let n; while ((n = walker.nextNode())) nodes.push(n);
+      nodes.forEach(node => {
+        const text = node.nodeValue;
+        RM_RE.lastIndex = 0;
+        const hits = [];
+        let m; while ((m = RM_RE.exec(text))) hits.push({ end: RM_RE.lastIndex, str: m[0] });
+        if (!hits.length) return;
+        const frag = document.createDocumentFragment();
+        let cursor = 0;
+        hits.forEach(h => {
+          frag.appendChild(document.createTextNode(text.slice(cursor, h.end)));
+          const span = document.createElement('span');
+          span.className = 'myr-approx';
+          if (stale) span.title = '参考汇率·非实时';
+          span.textContent = ' ' + approxFromRmStr(h.str);
+          frag.appendChild(span);
+          cursor = h.end;
+        });
+        frag.appendChild(document.createTextNode(text.slice(cursor)));
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+
     amountEl.addEventListener('input', recompute);
     swapEl.addEventListener('click', function () {
       dir = (dir === 'JPY2MYR') ? 'MYR2JPY' : 'JPY2MYR';
@@ -2874,6 +2920,7 @@
       recompute();
       renderNote();
       convertYenAmounts(document.body);
+      convertRmAmounts(document.body);
 
       // 2) history (sampled) → chart
       const today = new Date();
