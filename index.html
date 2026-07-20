@@ -1546,7 +1546,7 @@
           <div class="hotel-nights">Oct 5 &amp; Oct 13 · 各 1 晚</div>
           <div class="hotel-name">Henn na Hotel Tokyo Haneda</div>
           <div class="hotel-meta">
-            <div class="hotel-meta-row"><span class="hotel-meta-label">¥</span><span>约 ¥8,000–12,000 / 晚 <span class="jpy-approx" data-jpy-min="8000" data-jpy-max="12000"></span></span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">¥</span><span>约 ¥8,000–12,000 / 晚</span></div>
             <div class="hotel-meta-row"><span class="hotel-meta-label">位置</span><span>大鸟居站步行约 3 分钟</span></div>
             <div class="hotel-meta-row"><span class="hotel-meta-label">交通</span><span>京急空港线直达</span></div>
             <div class="hotel-meta-row"><span class="hotel-meta-label">特色</span><span>机器人 check-in · 离机场极近</span></div>
@@ -2751,19 +2751,58 @@
         : '<br>更新 ' + rateDate + ' · 数据 currency-api');
     }
 
-    function fillApprox() {
-      document.querySelectorAll('.jpy-approx').forEach(el => {
-        const one = el.getAttribute('data-jpy');
-        let txt;
-        if (one != null) {
-          txt = '≈ RM ' + fmtMYR(parseFloat(one) * jpyToMyr);
-        } else {
-          const lo = parseFloat(el.getAttribute('data-jpy-min'));
-          const hi = parseFloat(el.getAttribute('data-jpy-max'));
-          txt = '≈ RM ' + fmtMYR(lo * jpyToMyr) + '–' + fmtMYR(hi * jpyToMyr);
+    // Turn a matched yen string (e.g. "¥8,000–12,000", "¥1.5–2k", "¥500")
+    // into an "≈ RM …" label using the current rate.
+    function approxFromYenStr(s) {
+      const hasK = /k/i.test(s);
+      const body = s.replace(/[¥\s]/g, '').replace(/k/ig, '');
+      const parts = body.split(/[–—-]/);
+      const toNum = x => { let v = parseFloat(x.replace(/,/g, '')); if (hasK) v *= 1000; return v; };
+      let label;
+      if (parts.length === 2 && parts[1] !== '') {
+        label = '≈ RM ' + fmtMYR(toNum(parts[0]) * jpyToMyr) + '–' + fmtMYR(toNum(parts[1]) * jpyToMyr);
+      } else {
+        label = '≈ RM ' + fmtMYR(toNum(parts[0]) * jpyToMyr);
+      }
+      return label + (stale ? '*' : '');
+    }
+
+    // Scan the page for yen amounts and append an inline RM equivalent after each.
+    // Runs once; skips the converter UI, scripts/styles, and the bare "¥" label.
+    const YEN_RE = /¥\s?\d[\d,]*(?:\.\d+)?(?:\s?[–—-]\s?\d[\d,]*(?:\.\d+)?k?)?k?/g;
+    function convertYenAmounts(root) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!node.nodeValue || node.nodeValue.indexOf('¥') < 0) return NodeFilter.FILTER_REJECT;
+          const p = node.parentNode;
+          if (!p) return NodeFilter.FILTER_REJECT;
+          if (p.nodeName === 'SCRIPT' || p.nodeName === 'STYLE') return NodeFilter.FILTER_REJECT;
+          if (p.classList && p.classList.contains('jpy-approx')) return NodeFilter.FILTER_REJECT;
+          if (p.closest && p.closest('#currency')) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
         }
-        el.textContent = txt + (stale ? '*' : '');
-        if (stale) el.title = '参考汇率·非实时';
+      });
+      const nodes = [];
+      let n; while ((n = walker.nextNode())) nodes.push(n);
+      nodes.forEach(node => {
+        const text = node.nodeValue;
+        YEN_RE.lastIndex = 0;
+        const hits = [];
+        let m; while ((m = YEN_RE.exec(text))) hits.push({ end: YEN_RE.lastIndex, str: m[0] });
+        if (!hits.length) return;
+        const frag = document.createDocumentFragment();
+        let cursor = 0;
+        hits.forEach(h => {
+          frag.appendChild(document.createTextNode(text.slice(cursor, h.end)));
+          const span = document.createElement('span');
+          span.className = 'jpy-approx';
+          if (stale) span.title = '参考汇率·非实时';
+          span.textContent = ' ' + approxFromYenStr(h.str);
+          frag.appendChild(span);
+          cursor = h.end;
+        });
+        frag.appendChild(document.createTextNode(text.slice(cursor)));
+        node.parentNode.replaceChild(frag, node);
       });
     }
 
@@ -2834,7 +2873,7 @@
       } catch (e) { /* keep fallback */ }
       recompute();
       renderNote();
-      fillApprox();
+      convertYenAmounts(document.body);
 
       // 2) history (sampled) → chart
       const today = new Date();
