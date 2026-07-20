@@ -662,6 +662,10 @@
     z-index: 2;
     box-shadow: 0 2px 8px rgba(184,57,44,0.3);
   }
+  .hotel-badge.booked {
+    background: #2f8f5b;
+    box-shadow: 0 2px 8px rgba(47,143,91,0.3);
+  }
 
   /* note block */
   .note-block {
@@ -1250,7 +1254,7 @@
           </tr>
           <tr>
             <td class="date-cell">Oct 6 – 12</td>
-            <td class="hotel-cell">新宿酒店<small>Sotetsu Fresa Inn 推荐</small></td>
+            <td class="hotel-cell">HATAGO Shinokubo<small>Airbnb · 新大久保 · 已预订</small></td>
             <td class="note-cell">7 晚主要行程 · 新宿 · 涩谷 · 浅草 · 河口湖</td>
           </tr>
           <tr>
@@ -1272,9 +1276,10 @@
         <div class="info-card-title">关键交通</div>
         <div class="info-card-title-jp">— Transportation</div>
         <div class="transport-row"><span class="transport-from">羽田机场 → 大鸟居站</span><span class="transport-time">~10 min</span><span class="transport-cost">¥300</span></div>
-        <div class="transport-row"><span class="transport-from">大鸟居 → 新宿</span><span class="transport-time">~35 min</span><span class="transport-cost">¥600</span></div>
-        <div class="transport-row"><span class="transport-from">新宿 → 涩谷</span><span class="transport-time">~5 min</span><span class="transport-cost">¥160</span></div>
-        <div class="transport-row"><span class="transport-from">新宿 → 浅草</span><span class="transport-time">~40 min</span><span class="transport-cost">¥280</span></div>
+        <div class="transport-row"><span class="transport-from">大鸟居 → 新大久保 (Oct 6 移动)</span><span class="transport-time">~40 min</span><span class="transport-cost">¥650</span></div>
+        <div class="transport-row"><span class="transport-from">新大久保 → 新宿</span><span class="transport-time">~3 min / 步行 18min</span><span class="transport-cost">¥140</span></div>
+        <div class="transport-row"><span class="transport-from">新大久保 → 涩谷</span><span class="transport-time">~8 min</span><span class="transport-cost">¥170</span></div>
+        <div class="transport-row"><span class="transport-from">新大久保 → 浅草</span><span class="transport-time">~40 min</span><span class="transport-cost">¥310</span></div>
         <div class="transport-row"><span class="transport-from">新宿 → 河口湖 巴士</span><span class="transport-time">~2 hr</span><span class="transport-cost">¥2,200</span></div>
         <div class="transport-row"><span class="transport-from">机场 → 酒店 的士备用</span><span class="transport-time">~15 min</span><span class="transport-cost">¥1.5–2k</span></div>
       </div>
@@ -1351,27 +1356,36 @@
       </div>
 
       <div class="hotel-card">
-        <div class="hotel-badge">推荐</div>
+        <div class="hotel-badge booked">已预订</div>
         <div class="hotel-card-img-wrap">
           <img class="hotel-card-img"
-            src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=800&q=80"
-            alt="Sotetsu Fresa Inn Shinjuku">
+            src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=80"
+            alt="HATAGO Shinokubo Airbnb 新大久保">
         </div>
         <div class="hotel-card-body">
           <div class="hotel-nights">Oct 6 – 12 · 7 晚</div>
-          <div class="hotel-name">Sotetsu Fresa Inn Higashi-Shinjuku</div>
+          <div class="hotel-name">HATAGO Shinokubo</div>
           <div class="hotel-meta">
-            <div class="hotel-meta-row"><span class="hotel-meta-label">¥</span><span>约 ¥8,000–11,000 / 晚</span></div>
-            <div class="hotel-meta-row"><span class="hotel-meta-label">位置</span><span>东新宿站步行约 5 分钟</span></div>
-            <div class="hotel-meta-row"><span class="hotel-meta-label">交通</span><span>至新宿中心约 10 分钟</span></div>
-            <div class="hotel-meta-row"><span class="hotel-meta-label">特色</span><span>评分 4.1 · 有洗衣机 · 性价比高</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">RM</span><span>RM 9,722.97 / 7 晚（约 RM 1,389/晚）</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">位置</span><span>新大久保站步行约 1 分钟 · 百人町</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">房型</span><span>连层公寓 · 2 卧 · 睡 6 人 · 2 淋浴 2 卫</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">交通</span><span>至新宿站步行约 18 分钟 · 山手线 1 站</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">设施</span><span>Wi-Fi · 洗衣机 · 迷你厨房 · 投影仪</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">入住</span><span>6 大人 · 10/6 16:00 后 · 10/13 10:00 前 · 密码自助</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">注意</span><span>无电梯楼梯较陡 · 全馆禁烟 · 入住前后无行李寄存</span></div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+            <a class="maps-link" target="_blank"
+              href="https://www.airbnb.com/rooms/1675253548087715276?check_in=2026-10-06&check_out=2026-10-13&adults=6">Airbnb 预订 →</a>
+            <a class="maps-link" target="_blank"
+              href="https://www.google.com/maps/search/1+Chome-11-19+Hyakunincho+Shinjuku+City+Tokyo">Google Maps →</a>
           </div>
         </div>
       </div>
     </div>
 
     <div class="note-block">
-      <strong>选址理由</strong> · 新宿到涩谷 5 分钟，到浅草 40 分钟，河口湖巴士直发，是全行程地理位置最均衡的住宿点。10 月旺季，建议提前在 Agoda / Booking.com 预订。
+      <strong>选址理由</strong> · 新宿到涩谷 5 分钟，到浅草 40 分钟，河口湖巴士直发，是全行程地理位置最均衡的住宿点。Oct 6–12 的住宿已通过 Airbnb 预订（HATAGO Shinokubo · 新大久保 · 6 人 7 晚 · 总价 RM 9,722.97）。
     </div>
   </div>
 </section>
