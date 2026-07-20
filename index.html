@@ -605,6 +605,15 @@
   }
   .fx-rate-note .stale { color: var(--vermillion); }
 
+  /* inline "≈ RM" next to a JPY price */
+  .jpy-approx {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    color: var(--vermillion);
+    white-space: nowrap;
+  }
+
   .fx-chart-head {
     display: flex;
     justify-content: space-between;
@@ -1394,8 +1403,8 @@
 
       <!-- Trend chart -->
       <div class="info-card">
-        <div class="info-card-title">近 30 天走势</div>
-        <div class="info-card-title-jp">— 1,000 JPY → MYR · 30D</div>
+        <div class="info-card-title">近 90 天走势</div>
+        <div class="info-card-title-jp">— 1,000 JPY → MYR · 90D</div>
         <div class="fx-chart-head">
           <span class="fx-chart-current" id="fx-chart-current">—</span>
           <span class="fx-delta flat" id="fx-delta">—</span>
@@ -1537,7 +1546,7 @@
           <div class="hotel-nights">Oct 5 &amp; Oct 13 · 各 1 晚</div>
           <div class="hotel-name">Henn na Hotel Tokyo Haneda</div>
           <div class="hotel-meta">
-            <div class="hotel-meta-row"><span class="hotel-meta-label">¥</span><span>约 ¥8,000–12,000 / 晚</span></div>
+            <div class="hotel-meta-row"><span class="hotel-meta-label">¥</span><span>约 ¥8,000–12,000 / 晚 <span class="jpy-approx" data-jpy-min="8000" data-jpy-max="12000"></span></span></div>
             <div class="hotel-meta-row"><span class="hotel-meta-label">位置</span><span>大鸟居站步行约 3 分钟</span></div>
             <div class="hotel-meta-row"><span class="hotel-meta-label">交通</span><span>京急空港线直达</span></div>
             <div class="hotel-meta-row"><span class="hotel-meta-label">特色</span><span>机器人 check-in · 离机场极近</span></div>
@@ -2742,6 +2751,22 @@
         : '<br>更新 ' + rateDate + ' · 数据 currency-api');
     }
 
+    function fillApprox() {
+      document.querySelectorAll('.jpy-approx').forEach(el => {
+        const one = el.getAttribute('data-jpy');
+        let txt;
+        if (one != null) {
+          txt = '≈ RM ' + fmtMYR(parseFloat(one) * jpyToMyr);
+        } else {
+          const lo = parseFloat(el.getAttribute('data-jpy-min'));
+          const hi = parseFloat(el.getAttribute('data-jpy-max'));
+          txt = '≈ RM ' + fmtMYR(lo * jpyToMyr) + '–' + fmtMYR(hi * jpyToMyr);
+        }
+        el.textContent = txt + (stale ? '*' : '');
+        if (stale) el.title = '参考汇率·非实时';
+      });
+    }
+
     amountEl.addEventListener('input', recompute);
     swapEl.addEventListener('click', function () {
       dir = (dir === 'JPY2MYR') ? 'MYR2JPY' : 'JPY2MYR';
@@ -2794,9 +2819,9 @@
       currentEl.innerHTML = fmtMYR(vals[n - 1]) + ' MYR<small>/ 1,000 JPY</small>';
       const pct = ((vals[n - 1] - vals[0]) / vals[0]) * 100;
       deltaEl.classList.remove('up', 'down', 'flat');
-      if (pct > 0.05) { deltaEl.classList.add('up'); deltaEl.textContent = '▲ ' + pct.toFixed(2) + '% · 30D'; }
-      else if (pct < -0.05) { deltaEl.classList.add('down'); deltaEl.textContent = '▼ ' + Math.abs(pct).toFixed(2) + '% · 30D'; }
-      else { deltaEl.classList.add('flat'); deltaEl.textContent = '≈ 0.00% · 30D'; }
+      if (pct > 0.05) { deltaEl.classList.add('up'); deltaEl.textContent = '▲ ' + pct.toFixed(2) + '% · 90D'; }
+      else if (pct < -0.05) { deltaEl.classList.add('down'); deltaEl.textContent = '▼ ' + Math.abs(pct).toFixed(2) + '% · 90D'; }
+      else { deltaEl.classList.add('flat'); deltaEl.textContent = '≈ 0.00% · 90D'; }
     }
 
     async function init() {
@@ -2809,11 +2834,12 @@
       } catch (e) { /* keep fallback */ }
       recompute();
       renderNote();
+      fillApprox();
 
       // 2) history (sampled) → chart
       const today = new Date();
       const ymd = dt => dt.toISOString().slice(0, 10);
-      const offsets = [28, 24, 20, 16, 12, 8, 4];
+      const offsets = [90, 80, 70, 60, 50, 40, 30, 20, 10];
       const dates = offsets.map(o => { const dt = new Date(today); dt.setUTCDate(dt.getUTCDate() - o); return ymd(dt); });
 
       const hist = await Promise.all(dates.map(async d => {
